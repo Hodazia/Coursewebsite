@@ -7,12 +7,12 @@ export const Navbar = () => {
     return (
         <>
       {/* Navigation */}
-      <header className="sticky top-0 z-50 w-full border-b
+      <header className="sticky top-0 z-50 w-full 
        bg-background/95 backdrop-blur 
        text-[#4f0f69] 
        ">
         <div className="container mx-auto flex h-24 items-center
-         rounded-full p-4 my-4 border border-[#f6eafd] shadow-sm 
+         rounded-full p-4  border border-[#f6eafd] shadow-sm 
          ">
           <div className="mr-4 flex">
             <Link to="/" className="mr-6 flex items-center space-x-2">

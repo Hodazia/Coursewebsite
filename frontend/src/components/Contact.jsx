@@ -58,16 +58,15 @@ export const Contact = () => {
 
     return (
         <>
-        <div className="min-h-screen p-4 flex bg-[#fffef0]
-         justify-center items-center">
-
-
-        <form
-            className="bg-white p-8 rounded-lg shadow-xl w-full
-            max-w-md flex flex-col items-center space-y-6"
-            onSubmit={submitform}
+        <div className="flex-grow p-4 flex bg-[#fffef0] justify-center items-center">
+            <form
+                // Applied styling to match Hero/Newsletter components
+                className="bg-white p-8 md:p-12 lg:p-16 rounded-3xl shadow-xl w-full
+                max-w-md flex flex-col items-center space-y-6 text-center
+                border border-[#e2b9f9] mx-auto" // Added border and mx-auto for centering
+                onSubmit={submitform}
             >
-            <h2 className="text-3xl font-bold text-gray-800 mb-6">Contact Us</h2>
+                <h2 className="text-3xl font-bold text-[#4f0f69] mb-6">Contact Us</h2> {/* Applied theme color */}
 
                 {/* Name Input */}
                 <div className="w-full">
@@ -117,7 +116,7 @@ export const Contact = () => {
                 {/* Submit Button */}
                 <button
                     type="submit"
-                    className="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-300 ease-in-out transform hover:scale-105"
+                    className="w-full bg-[#4f0f69] text-[#fffef0] font-bold py-3 px-4 rounded-md hover:bg-[#6a1a8c] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-300 ease-in-out transform hover:scale-105" // Applied theme button styling
                 >
                     Submit Query
                 </button>
