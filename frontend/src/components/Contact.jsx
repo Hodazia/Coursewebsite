@@ -1,38 +1,69 @@
-import { useState } from "react"
-import { ToastContainer, toast} from 'react-toastify';
-import { BACKEND_URL } from "../assets/backend_url";
+import { useState } from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import axios from 'axios';
+import { Navbar } from "./Navbar";
+
+const BACKEND_URL = 'http://localhost:3000'; 
 
 export const Contact = () => {
-    const [name,setname] = useState('');
-    const [email,setemail] = useState('');
-    const [query,setquery] = useState('');
+    const [name, setname] = useState('');
+    const [email, setemail] = useState('');
+    const [query, setquery] = useState('');
 
     const submitform = async (e) => {
-        e.preventDefault();
-        setname('');
-        setemail('');
-        setquery('');
+        e.preventDefault(); 
 
-    // send  a backend request to the nodemailer API to send the 
-    // query to my mail, once the query is sent , send a toast message 
-    // that the query has been sent and it will be processed in the further 
-    // updates
+        // Data to be sent to the backend.
+        //
+        const databody = { 
+            name: name,
+            email: email,
+            query: query
+        };
 
-    const response = await axios.post(`${BACKEND_URL}/api/web/contact-sendquery`,{
-        name
-    })
+        try {
+          
+            // Corrected the URL path to match the backend controller's expectation.
+            const response = await axios.post(`${BACKEND_URL}/web/api/contact-sendquery`, databody);
 
-    toast.success("Your query has been sent successfully!")
-
-    }
+            // Check the success status from the backend's JSON response
+            if (response.data.success) {
+                toast.success(response.data.message || "Your query has been sent successfully!");
+                // Clear form fields only on successful submission
+                setname('');
+                setemail('');
+                setquery('');
+            } else {
+                // If backend indicates failure but returns a 200 status (e.g., validation error)
+                toast.error(response.data.message || "Failed to send your query. Please try again.");
+            }
+        } catch (error) {
+            // This catch block will handle network errors and non-2xx HTTP responses (like 400 or 500)
+            if (error.response) {
+                // The request was made and the server responded with a status code
+                // that falls out of the range of 2xx (e.g., 400, 500)
+                toast.error(error.response.data.message || "An error occurred on the server. Please try again later.");
+                console.error('Backend Error:', error.response.data);
+            } else if (error.request) {
+                // The request was made but no response was received
+                console.error('Network Error:', error.request);
+                toast.error("Network error. Please check your internet connection.");
+            } else {
+                // Something happened in setting up the request that triggered an Error
+                console.error('Request Setup Error:', error.message);
+                toast.error("An unexpected error occurred. Please try again.");
+            }
+        }
+    };
 
     return (
         <>
         <div className="min-h-screen p-4 flex bg-[#fffef0]
          justify-center items-center">
 
+
         <form
-            className="bg-white p-8 rounded-lg shadow-xl w-full 
+            className="bg-white p-8 rounded-lg shadow-xl w-full
             max-w-md flex flex-col items-center space-y-6"
             onSubmit={submitform}
             >
@@ -40,13 +71,13 @@ export const Contact = () => {
 
                 {/* Name Input */}
                 <div className="w-full">
-                    <label htmlFor="name" className="block text-gray-700 
+                    <label htmlFor="name" className="block text-gray-700
                     text-sm font-semibold mb-2">Name</label>
                     <input
                         type="text"
                         id="name"
                         placeholder="Enter your name"
-                        className="w-full px-4 py-2 border 
+                        className="w-full px-4 py-2 border
                         border-gray-300 rounded-md focus:outline-none
                          focus:ring-2 focus:ring-blue-500 transition duration-200 ease-in-out"
                         value={name}
@@ -91,7 +122,7 @@ export const Contact = () => {
                     Submit Query
                 </button>
 
-                
+
                 <ToastContainer
                     position="top-right" // Position of the toast
                     autoClose={4000} // Close after 5 seconds
@@ -106,6 +137,5 @@ export const Contact = () => {
             </form>
         </div>
         </>
-    )
-
-}
+    );
+};
