@@ -4,7 +4,7 @@ import { Hero } from "../components/Hero"
 import { Newsletter } from "../components/Newsletter"
 import { FAQSection } from "../components/FAQsection"
 import { CTASection } from "../components/CTASection"
-
+import { Testimonials } from "../components/Testimonials"
 
 export const LandingPage = () => {
     return (
@@ -14,6 +14,7 @@ export const LandingPage = () => {
         {/*Hero sections of the page */}
         <Hero />
         <CTASection />
+        <Testimonials />
         <Newsletter />
         <FAQSection />
         <Footer />
